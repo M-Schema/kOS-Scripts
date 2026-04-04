@@ -9,7 +9,7 @@ global function closeTerminal {
 global function importLib {
     parameter libName.
 
-    copyPath("0:/lib" + libName + ".ks", 
+    copyPath("0:/lib/" + libName + ".ks", 
             "1:/lib/" + libName + ".ks").
     runOncePath("1:/lib/" + libName + ".ks").
 }
