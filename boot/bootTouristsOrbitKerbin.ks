@@ -1,5 +1,6 @@
 set mission to "touristsOrbitKerbin".
 
+// ***********
 copyPath("0:/lib/functionsBoot.ks", "1:/lib/functionsBoot.ks").
 runOncePath("1:/lib/functionsBoot.ks").
 
