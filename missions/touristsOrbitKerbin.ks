@@ -1,30 +1,22 @@
-set stagePrelaunch to 7.
-
 // Stages
 // [7: decoupling Computer from Vessel] - won't be executed
 // 6: Prelaunch
 // 5: Booster with TWR of 1.3 
-// 4: Start stabilisation
+// 4: decoupling start-stabilisation
 // 3: LV
 // 2: decoupling Booster
 // 1: decoupling LV
 // 0: Parachutes
 
-// Missionsziele: 
-// I) Touristen suborbital ins All schießen;
-// II) einen Orbit um Kerbin etablieren;
-// III) Deorbit auf Kerbin;
-// IV) sichere Landung mit Fallschirmen;
+importLib("functionsOrbitKerbinEasyMode").
 
-//TODO 
-//ETA apo
-//calcCurrentMissionStep
+if (ship:status = "PRELAUNCH") {
+    set stagePrelaunch to ship:stageNum. 
+} else {
+    set stagePrelaunch to -1. 
+}
 
-
-importLib("calcLaunch").
-importLib("calcOrbit").
-
-lock stageNumber to ship:stageNum.
+lock stageNumber to ship:stageNum. // always re-evaluated
 
 sas off.
 print "The ship '" + ship:name + "' is ready.".
@@ -35,14 +27,13 @@ startCountdown(3, stagePrelaunch, "Liftoff").
 
 liftoff("doGravityTurn"). 
 
-doGravityTurn("establishOrbit").
+doGravityTurn("establishOrbitEasyMode").
 
-establishOrbit("reEntry").
+establishOrbitEasyMode("doReEntryEasyMode").
 
-reEntry("Mission accomplished").
+doReEntryEasyMode("Mission accomplished").
 
+lock throttle to 0.
 
 unlock steering.
 print "***********".
-print "'" + ship:name + "'. Time in mission: " 
-    + round(timestamp(missionTime):clock, 2) + " s".
