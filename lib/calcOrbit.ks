@@ -17,12 +17,16 @@ global function establishOrbit {
 
     if (missionStep = "establishOrbit") {
         print "Waiting for maneuver.".
+        print "Estimated Time of Arrival: T- " 
+            + round(ship:orbit:ETA:apoapsis, 3) + " s".
 
-        wait until ship:altitude = (ship:orbit:apoapsis - 100).
-        print "Apoapsis: " + ship:orbit:apoapsis.
+        //PROBLEM
+ 
+        wait until ship:orbit:ETA:apoapsis <= -5. // ETA is positive and running down!
+        print "Apoapsis: " + round(ship:orbit:apoapsis, 0) + " m".
         lock throttle to 1.
 
-        wait until ship:orbit:periapsis = ship:orbit:apoapsis.
+        wait until ship:orbit:periapsis = ship:body:atm:height.
         lock throttle to 0.
 
         set missionStep to nextMissionStep.
@@ -40,10 +44,15 @@ global function reEntry {
         //wait until ship:facing:vector = .
         wait until ship:orbit:periapsis = (ship:body:atm:height * 0.50).
         lock throttle to 0.
+        doNextStage().
 
         //Parachutes ship:srfPrograde:vector
+        wait until ship:altitude >= 10_000.
+        doNextStage().
 
         //landing
+        wait until ship:status = "LANDED" or "SPLASHED".
+        print ship:status.
 
         set missionStep to nextMissionStep.
     }

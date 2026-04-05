@@ -1,6 +1,7 @@
-set stagePrelaunch to 6. // for reboot ability
+set stagePrelaunch to 7.
 
 // Stages
+// [7: decoupling Computer from Vessel] - won't be executed
 // 6: Prelaunch
 // 5: Booster with TWR of 1.3 
 // 4: Start stabilisation
@@ -25,7 +26,10 @@ importLib("calcOrbit").
 
 lock stageNumber to ship:stageNum.
 
-print "Mission: " + mission.
+sas off.
+print "The ship '" + ship:name + "' is ready.".
+print "Body: " + ship:body:name.
+print "Altitude above sea level: " + round(ship:altitude, 0) + " m".
 
 startCountdown(3, stagePrelaunch, "Liftoff").
 
@@ -40,4 +44,5 @@ reEntry("Mission accomplished").
 
 unlock steering.
 print "***********".
-print mission.
+print "'" + ship:name + "'. Time in mission: " 
+    + round(timestamp(missionTime):clock, 2) + " s".
