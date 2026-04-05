@@ -1,3 +1,29 @@
+global function shipNameSelectingMission {    
+    set mission to ship:name:substring(4,(ship:name:length -4)).
+
+    if (ship:name = "kOS touristsOrbitKerbin") { 
+        runMission(mission).
+
+    } else if (ship:name = "kOS touristsOrbitMun") {
+        runMission(mission).
+
+    } else {
+        print "***********".
+        print " ".
+        print "The ship with the name". 
+        print "'" + ship:name + "'". 
+        print "isn't bound to a mission.".
+        print " ".
+        print "Please select another kOS ship".
+        print "or update the code at ".
+        print " ".
+        print "'0:/lib/functionsBoot.ks'".
+        print " ".
+        print "***********".
+        print " ".
+    }
+}
+
 global function openTerminal {
     core:part:getmodule("kOSProcessor"):doevent("open terminal").
 }
@@ -20,5 +46,7 @@ global function runMission {
     copyPath("0:/missions/" + nameMission + ".ks", 
             "1:/missions/" + nameMission + ".ks").
     cd("1:/missions").
+    print "Loading Mission: '" + nameMission + "'".
     runPath (nameMission).
 }
+
