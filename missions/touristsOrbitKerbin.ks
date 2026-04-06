@@ -1,4 +1,6 @@
-// Stages
+// kOS mission No. 1
+
+// stages
 // [7: decoupling Computer from Vessel] - won't be executed
 // 6: Prelaunch
 // 5: Booster with TWR of 1.3 

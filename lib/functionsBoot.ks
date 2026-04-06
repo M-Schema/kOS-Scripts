@@ -1,10 +1,10 @@
 global function shipNameSelectingMission {    
-    set mission to ship:name:substring(4,(ship:name:length -4)).
-
-    if (ship:name = "kOS touristsOrbitKerbin") { 
-        runMission(mission).
-
-    } else if (ship:name = "kOS touristsOrbitMun") {
+    if (ship:name = 
+        "kOS TouristsOrbitKerbin"
+        or "kOS AssistanceMunLander"
+        or "kOS TouristsOrbitMun"
+        ) { 
+        set mission to ship:name:substring(4,(ship:name:length -4)).
         runMission(mission).
 
     } else {
