@@ -10,7 +10,7 @@
 // 1: Parachutes
 // [0: decoupling computer from Vessel] - won't be executed
 
-importLib("functionsBasic").
+importLib("functionsLaunch").
 
 sas off.
 print "The ship '" + ship:name + "' is ready.".
@@ -27,6 +27,8 @@ print "Ignition".
 
 doNextStage().
 print "Liftoff".  
+
+doNextStage(). // LV ready
 
 when (stage:resourceslex["SolidFuel"]:amount < 0.01) then {
     lock throttle to (15 / 15).
@@ -110,7 +112,6 @@ global function doReEntryEasyMode {
         wait until ship:altitude <= 10_000.
         doNextStage().
 
-        //landing
         wait until ship:status = "LANDED" or "SPLASHED".
         print ship:status.
 
