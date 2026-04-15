@@ -4,6 +4,7 @@
 
 importLib("functionsLaunch").
 importLib("functionsOrbit").
+importLIB("functionsTransferToMoon.ks").
 
 
 print "The ship '" + ship:name + "' is ready.".
@@ -19,7 +20,7 @@ if (ship:status = "PRELAUNCH" and ship:stageNum = 10) {
 } 
 
 if (ship:stageNum = 9) {
-    print "Ignition!". // solid booster w/ TWR 1.3 at sea level -> Limit @ 79.5 % 
+    print "Ignition!". // solid booster w/ TWR 1.3 at sea level 
     sas off.
     lock steering to heading(90, 90). // roll
 
@@ -50,22 +51,25 @@ if (ship:stageNum = 6) {
 
     // maneuver calculation can't handle two stages at once, yet,
     // so burning the current down with ~250 m/s
-    lock steering to heading(90, -20, 0).
-    wait until vectorAngle(ship:facing:vector, heading(90, -20, 0):vector) <= 0.3.
-    print "Heading east.".
+    //lock steering to heading(90, -10, 0).
+    print "lock".
+    //wait until vectorAngle(ship:facing:vector, heading(90, -10, 0):vector) <= 0.5.
+    //print "Heading east at -10°.".
+    wait 0.
     lock throttle to 1.
     when ((stage:deltaV:current < 0.01)) then {
         lock throttle to 0.
         doNextStage().
     }
 
-    print "Waiting for Kerbin @ " 
-        + (ship:body:atm:height * 0.75) + " km".
+    print "Waiting for Kerbin @ " + (ship:body:atm:height * 0.75) + " km".
     wait until (ship:altitude >= ship:body:atm:height * 0.75).
+
+    //print "Test " + (ship:orbit:apoapsis * 1.001).
  
     // maneuver at apoapsis
     setHohmannTransferOrbitalManeuver(ship:orbit:apoapsis, 
-                                    (ship:orbit:apoapsis)).
+                                    (ship:orbit:apoapsis * 1.001)).
     doManeuver().
 }
 
@@ -95,29 +99,50 @@ if (ship:stageNum = 5) {
 }
 
 if (ship:stageNum = 4) {
-    // TODO
+
+    if (not(ship:status = "LANDED")) {
+        print "Waiting to get to the SOI (sphere of influence) of the Mun.".
+        
+        wait until body:name = "Mun".
+        print body:name.
+
+        lock steering to retrograde.
+
+        //setHohmannTransferOrbitalManeuver(MUN:periapsis, 
+        //                            MUN:periapsis).
+
+        //eta:periapsis
+
+        //unlock steering.
+
+        //doManeuver().
+
+        print "Soft landing".
+        print "... isn't implemented, yet.".
+        print "Please do it yourself.".
+    }
     
-    // -- mun landing -- // Mk-55 Bumms
-
-// orbit mun
-
-    //RCS on.
+    RCS on.
     if RCS print "RCS is on.".
 
-    //LIGHTS on.
+    LIGHTS on.
     if LIGHTS print "Lights are on.".
 
-    //GEAR on.
-    if GEAR print "Deploys landing gear".
+    GEAR on.
+    if GEAR print "Deploys landing gear.".
 
-    //LADDERS on.
+    LADDERS on.
+    if LADDERS print "Ladders are ready.".
 
     // MUN-Stein: Biome Canyons, Hochland oder Zwillingskrater
 
 
     wait until ship:status = "LANDED".
     print ship:status.
-
+    print " ".
+    
+    print "If you are ready to take off, stage by hand with the spacebar.".
+    wait until (ship:stageNum = 3).
 }
 
 if (ship:stageNum = 3) {
