@@ -5,7 +5,7 @@ global function startCountdown {
     
     from {local countdown is seconds.} 
     until countdown = 0 
-    step {SET countdown to countdown - 1.} 
+    step {set countdown to countdown - 1.} 
     do {
         print countdown.
         wait 1.
@@ -25,6 +25,7 @@ global function doGravityTurnEast {
 
     when (ship:orbit:apoapsis >= newApoapsis) then {
         lock throttle to 0.
+        //lock steering to srfPrograde.
         print "New apoapsis: " + round(ship:orbit:apoapsis, 0) + " m".
     }
       
@@ -33,7 +34,7 @@ global function doGravityTurnEast {
     lock steering to heading(90, 85, 0).
 
     wait until vectorAngle(ship:facing:vector, heading(90, 85, 0):vector) <= 0.3.
-    print "Heading east.".
+    //print "Heading east.".
 
     wait until vectorAngle(ship:srfPrograde:vector, ship:facing:vector) <= 0.3.
     lock steering to srfPrograde. //surface prograde
@@ -41,7 +42,7 @@ global function doGravityTurnEast {
 
     wait until ship:altitude >= 5_000.
     lock steering to heading(90, 45, 0).
-    print "45°".
+    print "correcting at 45°".
 
     wait until ship:altitude >= 10_000.
     lock steering to srfPrograde.
