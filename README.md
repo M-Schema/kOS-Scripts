@@ -5,5 +5,8 @@ See the kOS documentation: [https://ksp-kos.github.io/KOS_DOC/](https://ksp-kos.
 
 No warranty.
 
+**Archive Path:** `<KSP Root>/Ships/Script/`
+
+
 ![https://xkcd.com/1244/](https://imgs.xkcd.com/comics/six_words.png)
 - [https://xkcd.com/1244/](https://xkcd.com/1244/)
