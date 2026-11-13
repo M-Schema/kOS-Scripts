@@ -33,8 +33,10 @@ This creates symlinks from `Script/boot/`, `Script/lib/`, and `Script/missions/`
 **Uninstall:**
 ```bash
 cd ~/git/kOS-Scripts
-stow -D Script
+stow --delete --target="$HOME/.steam/steam/steamapps/common/Kerbal Space Program/Ships/Script" Script
 ```
+
+`--delete` removes the symlinks only; the scripts in this repository stay untouched.
 
 ---
 
